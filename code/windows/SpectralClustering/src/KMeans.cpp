@@ -85,10 +85,12 @@ float KMeans::GetNearestClass(CImg<> & attributs, int x, int y, CImgList<> & cen
 *******************************************************************************/
 CImgList<> KMeans::GetNewCenters(CImg<> & res, CImg<> & attributs, int ncl) {
     CImgList<> centers;
-    for(int i = 0 ; i < ncl ; ++i)
-        centers.push_back(CImg<float>(1,1,attributs.depth()));
+    long nb[ncl];
 
-    long nb[ncl] = {0};
+    for(int i = 0 ; i < ncl ; ++i) {
+        centers.push_back(CImg<float>(1,1,attributs.depth()));
+        nb[i] = 0;
+    }
 
     cimg_forXY(res, x, y) {
 

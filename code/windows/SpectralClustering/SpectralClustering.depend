@@ -83,3 +83,16 @@
 1480872052 o:\onedrive\github\spectralclustering\code\windows\spectralclustering\include\spectralclustering.h
 	"ClusteringAlgorithm.h"
 
+1480873019 source:o:\onedrive\github\spectralclustering\code\windows\spectralclustering\src\spectralclustering.cpp
+	"SpectralClustering.h"
+	<cmath>
+	<random>
+	<iostream>
+	<ctime>
+	<cstdlib>
+	<cstdio>
+	<string>
+	<cfloat>
+	<sstream>
+	"KMeans.h"
+
