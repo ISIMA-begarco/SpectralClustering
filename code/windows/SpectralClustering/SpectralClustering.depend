@@ -1,9 +1,10 @@
 # depslib dependency file v1.0
-1480870089 source:o:\onedrive\github\spectralclustering\code\windows\spectralclustering\main.cpp
+1482159770 source:o:\onedrive\github\spectralclustering\code\windows\spectralclustering\main.cpp
 	<iostream>
 	<string>
 	"CImg.h"
 	"SpectralClustering.h"
+	"KMeans.h"
 
 1479745399 o:\onedrive\github\spectralclustering\code\windows\spectralclustering\cimg.h
 	<cstdio>
@@ -60,30 +61,27 @@
 	"CImg.h"
 	<stdint.h>
 
-1480867990 source:o:\onedrive\github\spectralclustering\code\windows\spectralclustering\src\kmeans.cpp
+1482165949 source:o:\onedrive\github\spectralclustering\code\windows\spectralclustering\src\kmeans.cpp
 	"KMeans.h"
-	<random>
 	<iostream>
-	<ctime>
-	<cstdlib>
-	<cstdio>
 	<string>
-	<cfloat>
+	<random>
 	<sstream>
 
-1480868501 o:\onedrive\github\spectralclustering\code\windows\spectralclustering\include\kmeans.h
+1482160824 o:\onedrive\github\spectralclustering\code\windows\spectralclustering\include\kmeans.h
+	<random>
 	"ClusteringAlgorithm.h"
 
-1480868464 o:\onedrive\github\spectralclustering\code\windows\spectralclustering\include\clusteringalgorithm.h
+1482159611 o:\onedrive\github\spectralclustering\code\windows\spectralclustering\include\clusteringalgorithm.h
 	"../CImg.h"
 
 1480868315 source:o:\onedrive\github\spectralclustering\code\windows\spectralclustering\src\clusteringalgorithm.cpp
 	"ClusteringAlgorithm.h"
 
-1480872052 o:\onedrive\github\spectralclustering\code\windows\spectralclustering\include\spectralclustering.h
+1482159598 o:\onedrive\github\spectralclustering\code\windows\spectralclustering\include\spectralclustering.h
 	"ClusteringAlgorithm.h"
 
-1480873019 source:o:\onedrive\github\spectralclustering\code\windows\spectralclustering\src\spectralclustering.cpp
+1482166172 source:o:\onedrive\github\spectralclustering\code\windows\spectralclustering\src\spectralclustering.cpp
 	"SpectralClustering.h"
 	<cmath>
 	<random>
@@ -92,7 +90,9 @@
 	<cstdlib>
 	<cstdio>
 	<string>
+	<vector>
 	<cfloat>
 	<sstream>
+	<chrono>
 	"KMeans.h"
 

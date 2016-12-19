@@ -9,21 +9,21 @@ class SpectralClustering : public ClusteringAlgorithm {
         SpectralClustering(ClusteringAlgorithm &);
         virtual ~SpectralClustering();
 
-        virtual CImg<unsigned char> operator()(CImg<>,int);
+        virtual CImg<float> operator()(CImg<float>&,int);
 
     protected:
         ClusteringAlgorithm * classificator;
 
     private:
-        CImg<> GetFinalClusteringImage(CImg<> &,CImg<> &);
-        CImg<> GetNormalizedEigenMatrix(CImg<> &);
-        CImg<> GetEigenMatrix(const CImg<> &,unsigned);
-        CImg<> GetLMatrix(const CImg<> &);
-        CImg<> GetDSqrtInvMatrix(const CImg<> &);
-        CImg<> GetAffinityMatrix(const CImg<> &,float,unsigned);
+        CImg<float> GetFinalClusteringImage(CImg<float> &,CImg<float> &);
+        CImg<float> GetNormalizedEigenMatrix(CImg<float> &);
+        CImg<float> GetEigenMatrix(const CImg<float> &,unsigned);
+        CImg<float> GetLMatrix(const CImg<float> &);
+        CImg<float> GetDSqrtInvMatrix(const CImg<float> &);
+        CImg<float> GetAffinityMatrix(const CImg<float> &,float,unsigned);
         float Square(float);
         float GetNorm(float,float,float,float);
-        CImg<> AttributsExtraction(const CImg<> &);
+        CImg<float> AttributsExtraction(const CImg<float> &);
 };
 
 #endif // SPECTRALCLUSTERING_H

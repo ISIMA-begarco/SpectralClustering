@@ -1,6 +1,8 @@
 #ifndef KMEANS_H
 #define KMEANS_H
 
+#include <random>
+
 #include "ClusteringAlgorithm.h"
 
 class KMeans : public ClusteringAlgorithm {
@@ -8,18 +10,19 @@ class KMeans : public ClusteringAlgorithm {
         KMeans();
         virtual ~KMeans();
 
-        virtual CImg<unsigned char> operator()(CImg<>,int);
+        virtual CImg<float> operator()(CImg<>&,int);
 
     protected:
+        std::mt19937 gen;
 
     private:
-        float d2(CImg<>*,CImg<>*,int,int);
+        float d2(CImg<>&,CImg<>&,int,int);
         CImgList<> GetRandomCenter(CImg<> &,int);
         float GetNearestClass(CImg<> &,int,int,CImgList<> &);
         CImgList<> GetNewCenters(CImg<> &,CImg<> &,int);
         float GetError(CImg<> &,CImg<> &,CImgList<> &);
         float HasChanged(CImg<> &,CImg<> &);
-        CImg<unsigned char> execute(CImg<>,int);
+        CImg<float> execute(CImg<>&,int);
 
 };
 

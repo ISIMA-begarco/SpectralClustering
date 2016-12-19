@@ -11,6 +11,8 @@
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option host_application="small.bmp" />
+				<Option run_host_application_in_terminal="0" />
 				<Compiler>
 					<Add option="-g" />
 					<Add directory="include" />
@@ -21,6 +23,8 @@
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
+				<Option host_application="small.bmp" />
+				<Option run_host_application_in_terminal="0" />
 				<Compiler>
 					<Add option="-O2" />
 					<Add directory="include" />
@@ -33,6 +37,7 @@
 		<Compiler>
 			<Add option="-march=corei7" />
 			<Add option="-O2" />
+			<Add option="-Wextra" />
 			<Add option="-Wall" />
 			<Add option="-fexceptions -std=gnu++11" />
 		</Compiler>
