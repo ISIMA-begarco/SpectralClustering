@@ -134,16 +134,14 @@ float SpectralClustering::Square(float a) {
 
 CImg<float> SpectralClustering::GetAffinityMatrix(const CImg<float> & points, float sigma, unsigned k) {
 	int numberOfPoints = points.width()*points.height();	// nombre de points dans l'image
-	float coef = 2*Square(0.1);//2*Square(sigma)/k;		// coef a base de variance
+	float coef = 2*Square(sigma);//2*Square(sigma)/k;		// coef a base de variance
 	CImg<float> result(numberOfPoints,numberOfPoints,1,1,0.0);	// matrice d'affinite
 	CImg<float> distances(numberOfPoints,numberOfPoints,1,1,0.0);	// matrice des distances
 	CImg<float> mim(numberOfPoints,1,points.depth(),1,0.0);	// matrice image
-	CImg<float> mam(numberOfPoints,1,points.depth(),1,0.0);	// matrice image
 	int aa = 0;
 	cimg_forXY(points, x, y) {
         mim(aa,0,0) = points(x,y,0);
         mim(aa,0,1) = points(x,y,1);
-        mam(aa,0,0) = points(x,y,1);
         ++aa;
 	}
 	for (int i = 0 ; i < distances.width() ; ++i) {
@@ -157,59 +155,19 @@ CImg<float> SpectralClustering::GetAffinityMatrix(const CImg<float> & points, fl
 
 	for (int i = 0 ; i < result.width() ; ++i) {
 		for (int j = i+1; j < result.width(); ++j) {
-            result(i,j) = expf(-Square(distances(i,j))/(2*Square(0.5)));
+            result(i,j) = expf(-Square(distances(i,j))/coef);
             result(j,i) = result(i,j);
 		}
 	}
 
-/*
-	for(int i = 0 ; i < result.width() ; ++i) {
-            int x1 = i/points.width(),
-                x2 = i%points.width();
-		for (int j = i+1; j < result.width(); ++j) {
-			// remplissage de la partie superieure droite
-			result(i,j) = expf(-Square(
-								GetNorm(	points(x1, x2, 0),
-											points(x1, x2, 1),
-											points(j/points.width(),j%points.width(), 0),
-											points(j/points.width(),j%points.width(), 1)))
-											/coef);
-			// remplissage par symetrie de la partie inferieure gauche
-			//result(j,i) = result(i,j);
-		}
-	}*/
-
 	return result;
 }
 
-/**
-CImg<float> SpectralClustering::GetAffinityMatrix(const CImg<float> & points, float sigma, unsigned k) {
-	int numberOfPoints = points.width()*points.height();	// nombre de points dans l'image
-	float coef = 2*Square(sigma)/k;		// coef a base de variance
-	CImg<float> result(numberOfPoints,numberOfPoints,points.depth(),1,0.0);	// matrice d'affinite
-
-	cimg_forX(result, i) {
-		for (int j = i+1; j < points.width();++j) {
-			// remplissage de la partie superieure droite
-			result(i,j) = expf(-Square(
-								GetNorm(	points(i/points.width(),i%points.width(), 0),
-											points(i/points.width(),i%points.width(), 1),
-											points(j/points.width(),j%points.width(), 0),
-											points(j/points.width(),j%points.width(), 1)))
-											/coef);
-			// remplissage par symetrie de la partie inferieure gauche
-			result(j,i) = result(i,j);
-		}
-	}
-
-	return result;
-}
-**/
 CImg<float> SpectralClustering::GetDSqrtInvMatrix(const CImg<float> & affinity) {
 	CImg<float> res(affinity.width(),affinity.height(),1,1,0.0);	// matrice L
 
 	cimg_forXY(affinity, x, y) {
-		res(y,y) += affinity(x,y);
+		res(x,x) += affinity(x,y);
 	}
 
 	cimg_forX(res, x) {
@@ -223,15 +181,14 @@ CImg<float> SpectralClustering::GetDSqrtInvMatrix(const CImg<float> & affinity) 
 CImg<float> SpectralClustering::GetLMatrix(const CImg<float> & affinity) {
 	CImg<float> dsi = GetDSqrtInvMatrix(affinity);
 
-	CImg<float> res = dsi*affinity;
-
-	res = res * dsi;
+	CImg<float> res = dsi*affinity*dsi;
 
 	return res;
 }
 
 CImg<float> SpectralClustering::GetEigenMatrix(const CImg<float> & l, unsigned k) {
-	return (l.get_symmetric_eigen()[1].columns(0,k-1));
+    CImgList<> res = l.get_symmetric_eigen();
+	return (res[1].columns(0,k-1));
 }
 
 CImg<float> SpectralClustering::GetNormalizedEigenMatrix(CImg<float> & eigenMatrix) {
@@ -253,8 +210,6 @@ CImg<float> SpectralClustering::GetNormalizedEigenMatrix(CImg<float> & eigenMatr
         result(y,0,x) = (eigenMatrix(y,x)/sums[y]);
 	}
 
-	//printm(result);
-
 	return result;
 }
 
@@ -262,8 +217,9 @@ CImg<float> SpectralClustering::GetFinalClusteringImage(CImg<float> & spectralCl
     CImg<float> result(original.width(),original.height());
 
     cimg_forXY(result,x,y) {
-        result(x,y) = spectralClusters(y*result.width()+x,0);
+        result(x,y) = spectralClusters(y*result.width()+x);
     }
 
     return result;
 }
+
