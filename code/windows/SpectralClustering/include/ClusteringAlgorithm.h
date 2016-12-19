@@ -11,7 +11,7 @@ class ClusteringAlgorithm
         ClusteringAlgorithm();
         virtual ~ClusteringAlgorithm();
 
-        virtual CImg<float> operator()(CImg<>&,int) = 0;
+        virtual CImg<float> operator()(CImg<float>&,int) = 0;
         static const unsigned long MAXITER = 10000;
 
     protected:

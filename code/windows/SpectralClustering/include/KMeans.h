@@ -10,19 +10,19 @@ class KMeans : public ClusteringAlgorithm {
         KMeans();
         virtual ~KMeans();
 
-        virtual CImg<float> operator()(CImg<>&,int);
+        virtual CImg<float> operator()(CImg<float>&,int);
 
     protected:
         std::mt19937 gen;
 
     private:
-        float d2(CImg<>&,CImg<>&,int,int);
-        CImgList<> GetRandomCenter(CImg<> &,int);
-        float GetNearestClass(CImg<> &,int,int,CImgList<> &);
-        CImgList<> GetNewCenters(CImg<> &,CImg<> &,int);
-        float GetError(CImg<> &,CImg<> &,CImgList<> &);
-        float HasChanged(CImg<> &,CImg<> &);
-        CImg<float> execute(CImg<>&,int);
+        float d2(CImg<float>&,CImg<float>&,int,int);
+        CImgList<> GetRandomCenter(CImg<float> &,int);
+        float GetNearestClass(CImg<float> &,int,int,CImgList<> &);
+        CImgList<> GetNewCenters(CImg<float> &,CImg<float> &,int);
+        float GetError(CImg<float> &,CImg<float> &,CImgList<> &);
+        float HasChanged(CImg<float> &,CImg<float> &);
+        CImg<float> execute(CImg<float>&,int);
 
 };
 

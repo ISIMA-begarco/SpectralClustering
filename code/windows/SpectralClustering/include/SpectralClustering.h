@@ -10,6 +10,7 @@ class SpectralClustering : public ClusteringAlgorithm {
         virtual ~SpectralClustering();
 
         virtual CImg<float> operator()(CImg<float>&,int);
+        CImg<float> AttributsExtraction(const CImg<float> &);
 
     protected:
         ClusteringAlgorithm * classificator;
@@ -23,7 +24,6 @@ class SpectralClustering : public ClusteringAlgorithm {
         CImg<float> GetAffinityMatrix(const CImg<float> &,float,unsigned);
         float Square(float);
         float GetNorm(float,float,float,float);
-        CImg<float> AttributsExtraction(const CImg<float> &);
 };
 
 #endif // SPECTRALCLUSTERING_H

@@ -64,12 +64,15 @@ int main(int argc, const char* argv []) {
     // Affichage finale
     CImgDisplay dispImg(img,"Image originale");
     CImgDisplay dispRes(etiquette,"Image segmentee par Spectral");
-    //CImgDisplay dispKme(km(img,ncl).normalize(0,255),"Image segmentee par Kmeans");
+    CImg<> ss = algo.AttributsExtraction(img);
+    CImg<> tt = km(ss,ncl);
+    CImgDisplay dispKme(tt.normalize(0,255),"Image segmentee par Kmeans");
 
-    while (!dispImg.is_closed() && !dispRes.is_closed())
+    while (!dispImg.is_closed() && !dispRes.is_closed() && !dispKme.is_closed())
     {
         dispImg.wait();
         dispRes.wait();
+        dispKme.wait();
     }
     return 0;
 }
