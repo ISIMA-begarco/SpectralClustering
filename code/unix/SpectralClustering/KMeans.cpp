@@ -22,11 +22,11 @@ KMeans::~KMeans() {
                    Calcul de la distance au carre
 
 *******************************************************************************/
-float KMeans::d2(CImg<float> & g_i,CImg<float> & data, int x, int y) {
+float KMeans::d2(CImg<float> & g_i,CImg<float> & data, int y) {
     float d = 0.0;
 
-    for(int i = 0 ; i < data.depth() ; ++i) {
-        d += ((data(x,y,i)-g_i(0,0,i))*(data(x,y,i)-g_i(0,0,i)));
+    for(int x = 0 ; x < data.width() ; ++x) {
+        d += ((data(x,y)-g_i(x))*(data(x,y)-g_i(x)));
     }
 
     return d;
@@ -42,11 +42,10 @@ CImgList<> KMeans::GetRandomCenter(CImg<float> & attributs, int ncl) {
 
     for(int i = 0 ; i < ncl ; ++i)
     {
-        centers.push_back(CImg<float>(1,1,attributs.depth()));
-        int x = gen()/(float)gen.max()*attributs.width();
-        int y = gen()/(float)gen.max()*attributs.height();
-        for(int j = 0 ; j < attributs.depth() ; ++j)
-            centers(i)(j) = attributs(x,y,j);
+        centers.push_back(CImg<float>(attributs.width()));
+        int y = (gen()/(float)gen.max())*attributs.height();
+        for(int x = 0 ; x < attributs.width() ; ++x)
+            centers(i)(x) = attributs(x,y);
     }
     return centers;
 }
@@ -56,17 +55,17 @@ CImgList<> KMeans::GetRandomCenter(CImg<float> & attributs, int ncl) {
                         Fonction de determination de la classe la plus proche
 
 *******************************************************************************/
-float KMeans::GetNearestClass(CImg<float> & attributs, int x, int y, CImgList<> & centres) {
-    float classe = 255.0,
+float KMeans::GetNearestClass(CImg<float> & attributs, int y, CImgList<> & centres) {
+    float classe = 0.0,
           valeur = FLT_MAX;
     float temp;
 
     for(unsigned i = 0 ; i < centres.size() ; ++i) {
-        temp = d2(centres[i],attributs,x,y);
+        temp = d2(centres[i],attributs,y);
 
         if(temp < valeur) {
             valeur = temp;
-            classe = i;
+            classe = float(i);
         }
     }
 
@@ -80,27 +79,31 @@ float KMeans::GetNearestClass(CImg<float> & attributs, int x, int y, CImgList<> 
 *******************************************************************************/
 CImgList<> KMeans::GetNewCenters(CImg<float> & res, CImg<float> & attributs, int ncl) {
     CImgList<> centers;
-    long nb[ncl];
+    long * nb = new long[ncl];
 
     for(int i = 0 ; i < ncl ; ++i) {
-        centers.push_back(CImg<float>(1,1,attributs.depth()));
+        centers.push_back(CImg<float>(attributs.width()));
         nb[i] = 0;
     }
 
-    cimg_forXY(res, x, y) {
 
-        for(int i=0;i<attributs.depth();++i) {
-            int indtmp = (int)res(x,y);
-            centers[indtmp](i) += attributs(x,y,i);
+    // Sommation
+    cimg_forY(attributs, y) {
+
+        unsigned indtmp = (unsigned)res(y);
+        for(int x=0;x<attributs.width();++x) {
+            centers[indtmp](x) += attributs(x,y);
         }
 
-        nb[(int)res(x,y)]++;
+        nb[indtmp]++;
     }
 
+    // Moyennage
     for(int k=0;k<ncl;++k)
-        for(int i=0;i<attributs.depth();++i)
-            centers[k](i) /= nb[k];
+        for(int x=0;x<attributs.width();++x)
+            centers[k](x) /= nb[k];
 
+    delete [] nb;
     return centers;
 }
 
@@ -112,8 +115,8 @@ CImgList<> KMeans::GetNewCenters(CImg<float> & res, CImg<float> & attributs, int
 float KMeans::GetError(CImg<float> & res, CImg<float> & attributs, CImgList<> & centers) {
     float erreur = 0.0;
 
-    cimg_forXY(res, x, y) {
-        erreur += d2(centers((int)res(x,y)), attributs, x, y);
+    cimg_forX(res, x) {
+        erreur += d2(centers((int)res(x)), attributs, x);
     }
 
     return erreur;
@@ -141,19 +144,19 @@ float KMeans::HasChanged(CImg<float> & im1, CImg<float> & im2) {
 *******************************************************************************/
 CImg<float> KMeans::execute(CImg<float> & attributs, int ncl) {
 
-    CImg<float> res(attributs.width(),attributs.height(),1,1,0);
-    CImg<float> tmp(attributs.width(),attributs.height(),1,1,0);
+    CImg<float> res(attributs.height(),1,1,1,0);
+    CImg<float> tmp(attributs.height(),1,1,1,0);
     CImgList<float> centre = GetRandomCenter(attributs, ncl);
 
     bool continuer = true;
     unsigned round = 0;
-    float erreur = FLT_MAX;
+    float erreur = FLT_MAX-1.;
 
     while (continuer) {
         // clustering
-        cimg_forXY(res, x, y)
+        cimg_forX(tmp, x)
         {
-            tmp(x,y) = GetNearestClass(attributs,x,y,centre);
+            tmp(x) = GetNearestClass(attributs,x,centre);
         }
 
         // recalculer les centres
@@ -170,7 +173,7 @@ CImg<float> KMeans::execute(CImg<float> & attributs, int ncl) {
         cout << "Round " << round << " \tGain: " << 100*(erreur-new_error)/(erreur) << "%" << endl;
         erreur = new_error;
         for(int c = 0 ; c < ncl ; ++c)
-            cout<< "\t" << centre[c](0) << "\t" << centre[c](1) << endl;
+            cout<< "\t" << c << '\t' << res(c)/* << "\t" << centre[c](1)*/ << endl;
     }
 
     return res;

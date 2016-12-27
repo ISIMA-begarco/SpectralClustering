@@ -48,7 +48,7 @@ CImg<float> SpectralClustering::operator()(CImg<float> & img, int nbClusters) {
     t1 = t2;
     /// etape 1 : calcul de la matrice d'affinite et calcul de sigma
     cout << "DONE in " << duration << " microseconds" << endl << "STEP 1\t\t";
-    float sigma = 0.5f;
+    float sigma = 25.0f;
     CImg<float> affinityMatrix = this->GetAffinityMatrix(attributs, sigma, nbClusters);
     t2 = high_resolution_clock::now();
     duration = duration_cast<microseconds>( t2 - t1 ).count();
@@ -144,9 +144,12 @@ CImg<float> SpectralClustering::GetAffinityMatrix(const CImg<float> & points, fl
         mim(aa,0,1) = points(x,y,1);
         ++aa;
 	}
-	for (int i = 0 ; i < distances.width() ; ++i) {
+    for (int i = 0 ; i < distances.width() ; ++i) {
 		for (int j = i+1; j < distances.height(); ++j) {
-            distances(j,i) = GetNorm(mim(i,0,0),mim(i,0,1),mim(j,0,0),mim(j,0,1));
+            distances(j,i) = GetNorm(   mim(i,0,0),
+                                        mim(j,0,0),
+                                        mim(i,0,1),
+                                        mim(j,0,1));
             distances(i,j) = distances(j,i);
 		}
 	}
@@ -154,7 +157,7 @@ CImg<float> SpectralClustering::GetAffinityMatrix(const CImg<float> & points, fl
 	//distances.normalize(0,1);
 
 	for (int i = 0 ; i < result.width() ; ++i) {
-		for (int j = i+1; j < result.width(); ++j) {
+		for (int j = i+1; j < result.height(); ++j) {
             result(i,j) = expf(-Square(distances(i,j))/coef);
             result(j,i) = result(i,j);
 		}
@@ -164,7 +167,7 @@ CImg<float> SpectralClustering::GetAffinityMatrix(const CImg<float> & points, fl
 }
 
 CImg<float> SpectralClustering::GetDSqrtInvMatrix(const CImg<float> & affinity) {
-	CImg<float> res(affinity.width(),affinity.height(),1,1,0.0);	// matrice L
+	CImg<float> res(affinity.width(),affinity.height(),1,1,0.0);	// matrice D
 
 	cimg_forXY(affinity, x, y) {
 		res(x,x) += affinity(x,y);
@@ -192,7 +195,7 @@ CImg<float> SpectralClustering::GetEigenMatrix(const CImg<float> & l, unsigned k
 }
 
 CImg<float> SpectralClustering::GetNormalizedEigenMatrix(CImg<float> & eigenMatrix) {
-    CImg<float> result(eigenMatrix.height(),1,eigenMatrix.width(),1,0.0);	// matrice normalisee
+    CImg<float> result(eigenMatrix.width(),eigenMatrix.height(),1,1,0.0);	// matrice normalisee
     std::vector<float> sums(eigenMatrix.height());
 
     // calcul des sommes des carres sur les lignes
@@ -202,12 +205,12 @@ CImg<float> SpectralClustering::GetNormalizedEigenMatrix(CImg<float> & eigenMatr
 
 	// somme à la racine carree
 	cimg_forY(eigenMatrix, y) {
-        sums[y] = sqrt(sums[y]);
+        sums[y] = sqrtf(sums[y]);
 	}
 
 	// calcul de la matrice normalisee
 	cimg_forXY(eigenMatrix, x, y) {
-        result(y,0,x) = (eigenMatrix(y,x)/sums[y]);
+        result(x,y,0) = (eigenMatrix(x,y)/sums[y]);
 	}
 
 	return result;

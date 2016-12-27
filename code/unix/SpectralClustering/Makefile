@@ -15,7 +15,7 @@ OBJETS=$(SOURCES:%.cpp=%.o)
 
 #Compilateur et options de compilation
 CCPP=g++
-CFLAGS=-Wall -O2 -ffast-math -I /usr/X11R6/include -I ./CImg -std=c++11
+CFLAGS=-g -Wall -O2 -ffast-math -I /usr/X11R6/include -I ./CImg -std=c++11
 
 
 LFLAGS= -L . -L /usr/X11R6/lib  -lpthread -lX11 -lXext -Dcimg_use_xshm  -lm
