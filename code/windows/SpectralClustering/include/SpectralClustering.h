@@ -6,7 +6,9 @@
 class SpectralClustering : public ClusteringAlgorithm {
     public:
         SpectralClustering();
+        SpectralClustering(float);
         SpectralClustering(ClusteringAlgorithm &);
+        SpectralClustering(ClusteringAlgorithm &,float);
         virtual ~SpectralClustering();
 
         virtual CImg<float> operator()(CImg<float>&,int);
@@ -14,6 +16,7 @@ class SpectralClustering : public ClusteringAlgorithm {
 
     protected:
         ClusteringAlgorithm * classificator;
+        float sigma;
 
     private:
         CImg<float> GetFinalClusteringImage(CImg<float> &,CImg<float> &);

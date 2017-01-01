@@ -16,9 +16,9 @@ class KMeans : public ClusteringAlgorithm {
         std::mt19937 gen;
 
     private:
-        float d2(CImg<float>&,CImg<float>&,int,int);
+        float d2(CImg<float>&,CImg<float>&,int);
         CImgList<> GetRandomCenter(CImg<float> &,int);
-        float GetNearestClass(CImg<float> &,int,int,CImgList<> &);
+        float GetNearestClass(CImg<float> &,int,CImgList<> &);
         CImgList<> GetNewCenters(CImg<float> &,CImg<float> &,int);
         float GetError(CImg<float> &,CImg<float> &,CImgList<> &);
         float HasChanged(CImg<float> &,CImg<float> &);
