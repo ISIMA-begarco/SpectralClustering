@@ -36,8 +36,7 @@ int main(int argc, const char* argv []) {
     CImgDisplay dispImg(img,"Image originale");
     CImgDisplay dispRes(etiquette,"Image segmentee");
 
-    while (!dispImg.is_closed() && !dispRes.is_closed())
-    {
+    while (!dispImg.is_closed() && !dispRes.is_closed()) {
         dispImg.wait();
         dispRes.wait();
     }

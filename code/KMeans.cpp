@@ -56,8 +56,8 @@ CImgList<> KMeans::GetRandomCenter(CImg<float> & attributs, int ncl) {
 
 *******************************************************************************/
 float KMeans::GetNearestClass(CImg<float> & attributs, int y, CImgList<> & centres) {
-    float classe = 0.0,
-          valeur = FLT_MAX;
+    int classe = 0;
+    float valeur = FLT_MAX - 1.0;
     float temp;
 
     for(unsigned i = 0 ; i < centres.size() ; ++i) {
@@ -65,7 +65,7 @@ float KMeans::GetNearestClass(CImg<float> & attributs, int y, CImgList<> & centr
 
         if(temp < valeur) {
             valeur = temp;
-            classe = float(i);
+            classe = i;
         }
     }
 
@@ -90,7 +90,7 @@ CImgList<> KMeans::GetNewCenters(CImg<float> & res, CImg<float> & attributs, int
     // Sommation
     cimg_forY(attributs, y) {
 
-        unsigned indtmp = (unsigned)res(y);
+        long indtmp = (long)res(y);
         for(int x=0;x<attributs.width();++x) {
             centers[indtmp](x) += attributs(x,y);
         }
@@ -99,8 +99,8 @@ CImgList<> KMeans::GetNewCenters(CImg<float> & res, CImg<float> & attributs, int
     }
 
     // Moyennage
-    for(int k=0;k<ncl;++k)
-        for(int x=0;x<attributs.width();++x)
+    for(long k=0;k<ncl;++k)
+        for(long x=0;x<attributs.width();++x)
             centers[k](x) /= nb[k];
 
     delete [] nb;
@@ -150,7 +150,6 @@ CImg<float> KMeans::execute(CImg<float> & attributs, int ncl) {
 
     bool continuer = true;
     unsigned round = 0;
-    float erreur = FLT_MAX-1.;
 
     while (continuer) {
         // clustering
@@ -163,18 +162,13 @@ CImg<float> KMeans::execute(CImg<float> & attributs, int ncl) {
         centre = GetNewCenters(tmp, attributs, ncl);
 
         // trop long
-
-        float new_error = GetError(tmp, attributs, centre);
         bool changed = HasChanged(res,tmp);
         res = tmp;
         ++round;
-        continuer = /*(new_error < erreur); &&*/ changed && (round < MAXITER);
-
-        cout << "Round " << round << " \tGain: " << 100*(erreur-new_error)/(erreur) << "%" << endl;
-        erreur = new_error;
-        for(int c = 0 ; c < ncl ; ++c)
-            cout<< "\t" << c << '\t' << res(c)/* << "\t" << centre[c](1)*/ << endl;
+        continuer = changed && (round < MAXITER);
     }
+
+    cout << "Terminated in " << round << " iterations." << endl;
 
     return res;
 }
