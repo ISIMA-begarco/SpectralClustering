@@ -41,4 +41,4 @@ depend:
 main.o: main.cpp
 
 run:
-	./tp8
+	./$(EXEC)

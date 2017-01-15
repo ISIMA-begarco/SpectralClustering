@@ -128,8 +128,7 @@ CImg<float> SpectralClustering::AttributsExtraction(const CImg<float> & img) {
 // Calcul de la moyenne et de la variance locale
     CImg<float> N(3,3);
 
-    cimg_for3x3(img,x,y,0,0,N,float)
-    {
+    cimg_for3x3(img,x,y,0,0,N,float) {
         attributs(x,y,0) = N.mean();
         attributs(x,y,1) = std::sqrt(N.variance());
 
@@ -253,4 +252,3 @@ CImg<float> SpectralClustering::GetFinalClusteringImage(CImg<float> & spectralCl
 
     return result;
 }
-

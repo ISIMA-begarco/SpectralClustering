@@ -58,7 +58,7 @@ CImgList<> KMeans::GetRandomCenter(CImg<float> & attributs, int ncl) {
 float KMeans::GetNearestClass(CImg<float> & attributs, int y, CImgList<> & centres) {
     int classe = 0;
     float valeur = FLT_MAX - 1.0;
-    float temp;
+    float temp = 0.0;
 
     for(unsigned i = 0 ; i < centres.size() ; ++i) {
         temp = d2(centres[i],attributs,y);
@@ -82,7 +82,7 @@ CImgList<> KMeans::GetNewCenters(CImg<float> & res, CImg<float> & attributs, int
     long * nb = new long[ncl];
 
     for(int i = 0 ; i < ncl ; ++i) {
-        centers.push_back(CImg<float>(attributs.width()));
+        centers.push_back(CImg<float>(attributs.width(),1,1,1,0));
         nb[i] = 0;
     }
 
