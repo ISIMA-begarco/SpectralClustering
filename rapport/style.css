@@ -195,3 +195,7 @@ div#acces_rapide {
 .references li {
 	list-style:none;
 }
+
+.algo li {
+	list-style: symbols("0 - " "1 - " "2 - " "3 - " "4 - " "5 - " "6 - "); 
+}

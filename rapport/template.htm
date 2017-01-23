@@ -31,10 +31,127 @@
   <h2 class="soustitrearticle"> Partie th&eacute;orique</h2>
 	<p>
 		Pr&eacute;sentation de la m&eacute;thode utilis&eacute;e et r&eacute;f&eacute;rence aux travaux connexes (cf. biblio article)
+
+		<ol class="algo">
+			<h3><li>
+				Préparation des données 
+			</li></h3>
+			<p>
+				
+			</p>
+			<h3><li>
+				Calcul de la matrice d'affinité A
+			</li></h3>
+			<p>
+				
+			</p>
+			<h3><li>
+				Calcul de la matrice d'analyse L
+			</li></h3>
+			<p>
+				
+			</p>
+			<h3><li>
+				Extraction des k vecteurs propres ayant les plus grandes valeurs propres
+			</li></h3>
+			<p>
+				
+			</p>
+			<h3><li>
+				Renormalisation de la matrice des k vecteurs propres
+			</li></h3>
+			<p>
+				
+			</p>
+			<h3><li>
+				Application d'un algorithme de clustering sur la matrice des vecteurs propres
+			</li></h3>
+			<p>
+				
+			</p>
+			<h3><li>
+				Assignement des points au cluster de leur ligne de la matrice des vecteurs propres
+			</li></h3>
+			<p>
+				
+			</p>
+		</ol>
 	</p>
-  <h2 class="soustitrearticle"> Impl&eacute;mentation</h2>
+  <h2 class="soustitrearticle"> Implémentation</h2>
 	<p>
-		D&eacute;tails de l'impl&eacute;mentation (sous CImg)
+		Nous allons maintenant aborder les détails d'implémentation de notre programme. Celui-ci se présente sous la forme d'un code C++ utilisant la bibliothèque CImg pour le traitement des images. Son utilisation est assez simple :
+	</p>	
+	<ul>
+		<em>spectral_clustering [ input_image [ nb_classes [ sigma ] ] ]</em> avec
+		<li>
+			<strong>input_image</strong> : le chemin vers l'image à traiter
+		</li>
+		<li>
+			<strong>nb_classes</strong> : le nombre de classes k que l'on veut obtenir
+		</li>
+		<li>
+			<strong>sigma</strong> : le paramètre de controle de la plongée de la matrice d'affinité
+		</li>
+	</ul>
+	<p>
+		Le code source se décompose en trois classes très liées mais qui permettent une grande modularité du code :
+	</p>
+	<ul>
+		<li>
+			<strong>ClusteringAlgorithm</strong> : cette classe abstraite propose une interface générique de clustering et permet de modulariser le code pour pouvoir facilement interchanger les algorithmes avec des foncteurs.
+		</li>
+		<li>
+			<strong>SpectralAlgorithm</strong> : cette classe implémente sa classe mère ClusteringAlgorithm avec l'algorithme vu précédemment. L'algorithme de classement de l'étape 5 peut-être modifier grâce au polymorphisme du foncteur utilisé.
+		</li>
+		<li>
+			<strong>KMeans</strong> : cette classe implémente sa classe mère ClusteringAlgorithm avec l'algorithme des K-Means.
+		</li>
+	</ul>
+	<p>
+		<ol class="algo">
+			<h3><li>
+				Préparation des données 
+			</li></h3>
+			<p>
+				
+			</p>
+			<h3><li>
+				Calcul de la matrice d'affinité A
+			</li></h3>
+			<p>
+				
+			</p>
+			<h3><li>
+				Calcul de la matrice d'analyse L
+			</li></h3>
+			<p>
+				
+			</p>
+			<h3><li>
+				Extraction des k vecteurs propres ayant les plus grandes valeurs propres
+			</li></h3>
+			<p>
+				
+			</p>
+			<h3><li>
+				Renormalisation de la matrice des k vecteurs propres
+			</li></h3>
+			<p>
+				
+			</p>
+			<h3><li>
+				Application d'un algorithme de clustering sur la matrice des vecteurs propres
+			</li></h3>
+			<p>
+				
+			</p>
+			<h3><li>
+				Assignement des points au cluster de leur ligne de la matrice des vecteurs propres
+			</li></h3>
+			<p>
+				
+			</p>
+		</ol>
 	</p>
   <br/>
   <h1 class="titrearticle"> R&eacute;sultats</h1>
