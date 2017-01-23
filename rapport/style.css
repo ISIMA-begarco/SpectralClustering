@@ -191,3 +191,7 @@ input.bouton:hover {
 div#acces_rapide { 
   display: none;
 }
+
+.references li {
+	list-style:none;
+}
