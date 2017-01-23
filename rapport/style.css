@@ -1,0 +1,193 @@
+body { 
+  margin: 0;
+  padding: 0;
+  background-color: #fffef9;
+  font-family : Verdana, "Lucida Grande", Lucida, Tahoma, "Trebuchet MS", Arial, Geneva, Helvetica, sans-serif;
+  font-size: 14px; 
+  text-align: justify;
+  padding-bottom: 20px;
+}
+
+
+h1, h2, h3, h4, h5 { 
+  color: #336699;
+  margin: 0;
+}
+
+h1 {
+  border-bottom: 1px solid #f7ad5a;
+  padding-bottom: 3px;
+  font-size: 20px;
+}
+
+h1 a {
+ text-decoration: none;
+}
+
+h2 {
+  font-size: 16px;
+  padding-left: 20px;
+  margin-bottom: 20px;
+}
+
+h3 {
+  font-size: 15px;
+  padding: 5px;
+}
+
+p { 
+  margin: 5px;
+}
+
+a { 
+  color: #c63939;
+  text-decoration: underline;
+  font-weight: bold;
+}
+
+a:hover { 
+  color: #f7ad5a;
+  text-decoration: none;
+}
+
+a:visited { 
+  color: #5c4122;
+}
+
+img { border: 0; }
+
+ul { 
+  padding: 0;
+  margin: 0;
+}
+
+li { 
+  margin: 0;
+  margin-left: 20px;
+  list-style-type: circle;
+}
+
+/*************** présentation **********/
+div#corps { 
+  margin: 0px 50px 0px 50px;
+  border: 1px solid #ddcac3;
+  border-top: 0;
+  padding: 0px 10px 0px 10px;
+  background: url("images/degrade.png") repeat-y 110px white;
+  
+}
+
+div#pied { 
+  font-size: 13px;
+  text-align: right;
+  margin: 60px 0px 0px 0px;
+  padding-bottom: 10px;
+  border-top: 1px solid #ddcac3;
+  color: #b5aaaa;
+  clear: both;
+  background-color: white;
+}
+
+div#pied a { 
+  text-decoration: none;
+  color: #c6655c;
+  
+}
+
+div#pied a:hover { 
+  text-decoration: underline;  
+}
+
+div#contenu { 
+  margin-left: 160px;
+  padding: 30px 10px;
+}
+
+div#menu {  
+  width: 150px;
+  position: absolute;
+  top: 180px;
+  left: 50px;
+  text-align: left;
+  font-size: 13px;
+}
+
+div#menu ul { 
+  padding-left: 10px;
+  width: 100%;
+}
+
+div#menu ul li ul { 
+  width: auto;
+  font-size: 80%;
+}
+
+
+div#menu li { 
+  margin: 0;
+  list-style-type: none; 
+}
+
+div#menu li a { 
+  text-decoration: none;
+  display: block;
+  margin: 5px 5px 5px 0px;
+  background-color: #fff1dd;
+  color: #862626;
+  padding: 2px;
+}
+  
+div#menu li a.actif { 
+  background-color: #fff;
+  border: 1px solid #fff1dd;
+  color: #000;
+}
+
+div#menu li a:hover { 
+  color: #c63939;
+  background-color: #f7ad5a;
+} 
+
+div#bandeau { 
+  margin: 0px 50px;
+  border-left: 1px solid #ddcac3;
+  border-right: 1px solid #ddcac3;
+  height: 120px;
+  background: url("images/banniere.jpg") no-repeat;
+}
+div#bandeaubas {
+ margin: 0px 50px;
+ border-left: 1px solid #ddcac3;
+ border-right: 1px solid #ddcac3;
+ height: 10px;
+ background: url("images/bas.png") repeat-x;       
+}
+
+div#recherche { 
+  position: absolute;
+  top: 130px;
+  right: 70px;
+  font-size: 12px;
+}
+
+input.saisie { 
+  border: 1px inset;
+}
+
+input.saisie:hover, input.saisie:focus {
+  background-color: #fff1dd;
+}
+
+input.bouton { 
+  border: 1px outset;
+  background-color: #fff1dd;
+}
+
+input.bouton:hover { 
+  border: 1px inset;
+  background-color: white;
+}
+
+div#acces_rapide { 
+  display: none;
+}
