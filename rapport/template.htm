@@ -11,7 +11,7 @@
 <body>
   <h1>On Spectral Clustering: Analysis and an algorithm</h1>
   <h3>Benoît Garçon & Pierre-Loup Pissavy, PROMO 17 F2</h3>
-  <h1 class="titrearticle"> Pr&eacute;sentation du sujet </h1>
+  <h1 class="titrearticle"> Présentation du sujet </h1>
   <p>
     Ce rapport a été rédigé dans le cadre d’un cours d’algorithme pour le traitement d'image délivré par V. Barra et C. Tilmant, suivi à l’Institut Supérieur d’Informatique, de Modélisation et de leurs Applications (ISIMA). Il a pour but de présenter succinctement nos travaux sur le programme de clustering d'images basé sur de l'analyse spectrale. Ce document est un complément du programme implémenté en C++ et dont les aspects sont abordés plus loin.
   </p>
@@ -25,12 +25,12 @@
     Nous présenterons tout d’abord l’algorithme, son principe et les détails de son implémentation. Ensuite nous exposerons les différents résultats obtenus grâce au programme produit. Enfin nous discuterons des différents résultats par rapport aux objectifs initiaux.
   </p>
   <br/>
-  <h1 class="titrearticle"> M&eacute;thode</h1>
+  <h1 class="titrearticle"> Méthode</h1>
 
 
-  <h2 class="soustitrearticle"> Partie th&eacute;orique</h2>
+  <h2 class="soustitrearticle"> Partie théorique</h2>
 	<p>
-		Pr&eacute;sentation de la m&eacute;thode utilis&eacute;e et r&eacute;f&eacute;rence aux travaux connexes (cf. biblio article)
+		Présentation de la méthode utilisée et référence aux travaux connexes (cf. biblio article)
 
 		<ol class="algo">
 			<h3><li>
@@ -154,23 +154,29 @@
 		</ol>
 	</p>
   <br/>
-  <h1 class="titrearticle"> R&eacute;sultats</h1>
+  <h1 class="titrearticle">Résultats</h1>
 
-  <h2 class="soustitrearticle"> Validation sur donn&eacute;es de synth&egrave;se</h2>
-	<p>
-	  Vous devez cr&eacute;er des donn&eacute;es de synth&egrave;se pour &eacute;valuer votre m&eacute;thode
-	</p>
-  <h2 class="soustitrearticle"> Donn&eacute;es r&eacute;elles</h2>
+  <h2 class="soustitrearticle">Validation sur données de synthèse</h2>
   <p>
-  	Une fois la m&eacute;thode &eacute;valu&eacute;e, vous appliquerez votre m&eacute;thode sur des images r&eacute;elles.
-	</p>
-	<br/>
-  <h1 class="titrearticle"> Discussion</h1>
-	<p>
-	  Commentez vos r&eacute;sultats (d'un point de vue qualitatif <span style="font-weight: bold;">ET</span> quantitatif)
+    Vous devez créer des données de synthèse pour évaluer votre méthode
+  </p>
+  <h2 class="soustitrearticle">Données réelles</h2>
+  <p>
+    Une fois la méthode évaluée, vous appliquerez votre méthode sur des images réelles.
   </p>
   <br/>
-  <h1 class="titrearticle"> R&eacute;f&eacute;rences</h1>
+  <h1 class="titrearticle">Discussion</h1>
+  <p>
+    Comme on peut le voir dans la section précédente, les résultats sont plutôt concordant avec les axes d'amélioration d'un algorithme naïf de K-Means. On constate bien qu'il est maintenant possible de caractériser des ensembles non convexes de points contrairement à un algorithme classique. On arrive à s'abstraire donc de la distance dans le plan de l'image pour analyser les propriétés des points et en tirer des ensembles plus cohérent. Dans un algorithme naïf par exemple, le cercle aurait au mieux donné un disque alors qu'ici nous obtenons bien un disque. Il en est de même pour les caractères qui comme dans l'article étudié auraient été séparés selon les distances spatiales.
+  </p>
+  <p>
+    D'un point de vue plus pratique le programme manipule des données de taille très importante : si l'on considère une image de taille WxH alors notre programme manipulera des matrices de dimension (W*L) x (W*L). Concrètement, une image de taille moyenne 512x256 par exemple, comporte donc 131 072 pixels qui va générer une matrice d'affinité de taille 131072x131072 soit une matrice de plus de 17 milliard d'éléments et si on considère 3 octets par élément on manipulera donc des matrices de plus de 48Go. Malgré l'usage intensif de références et de suppressions de copies, les machines à notre disposition ne sont pas capables de traiter des données de cette taille raisonnablement, sans parler des dépassement de mémoire.
+  </p>
+  <p>
+    C'est pourquoi nous avons travaillé sur des échantillons d'images de taille réduite. Il a donc aussi fallu revoir la taille des voisinnages pour pallier à la faible taille des images pour ne pas perdre trop d'information au calcul des paramètres des points.
+  </p>
+  <br/>
+  <h1 class="titrearticle">Références</h1>
   <p>
 	<ul class="references">
 	  <li>[1] Andrew Y Ng, Michael I Jordan, and Yair Weiss. On Spectral Clustering: Analysis and an algorithm. Advances in Neural Information Processing Systems, pages 849-856, 2001.
