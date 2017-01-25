@@ -32,6 +32,9 @@ int main(int argc, const char* argv []) {
     CImg<float> etiquette = algo(img,ncl);
     etiquette.normalize(0,255);
 
+    file += "_res.bmp";
+    etiquette.save(file.c_str());
+    /*
     // Affichage finale
     CImgDisplay dispImg(img,"Image originale");
     CImgDisplay dispRes(etiquette,"Image segmentee");
@@ -40,5 +43,6 @@ int main(int argc, const char* argv []) {
         dispImg.wait();
         dispRes.wait();
     }
+    */
     return 0;
 }
