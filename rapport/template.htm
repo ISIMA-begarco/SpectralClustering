@@ -30,52 +30,65 @@
 
 	<h2 class="soustitrearticle"> Partie théorique</h2>
 	<p>
-		Présentation de la méthode utilisée et référence aux travaux connexes (cf. biblio article)
+		L'article <strong>[1]</strong> se basant sur les autres travaux fournit un algorithme simple pour le clustering spectral. Nous allons détaillé cet algorithme et certains aspects discutable que l'on peut retrouver dans les références.
 
 		<ol class="algo">
 			<h3><li>
-				Préparation des données 
+				Conditions initiales 
 			</li></h3>
 			<p>
-				
+				Cet algorithme prend en entrée deux paramètres : S, une liste de n points dans ℝ<sup>l</sup> et k, le nombre de cluster que l'on désire.
 			</p>
 			<h3><li>
-				Calcul de la matrice d'affinité A
+				Calcul de la matrice d'affinité A des points de S. Cette matrice appartient donc
 			</li></h3>
 			<p>
-				
+				La première étape de l'algorithme consiste à produire la matrice d'affinité A appartenant à ℝ<sup>nxn</sup> (n étant toujours le nombre de points). Cette matrice est nulle sur sa daigonale (A<sub>ii</sub> = 0) et pour le reste A<sub>ij</sub> = A<sub>ji</sub> = exp(-||s<sub>i</sub> - s<sub>j</sub>||²/2σ²) définissant la distance entre les points. 
+			</p>
+			<p>
+				Ici le paramètre σ est donné par l'utilisateur mais il est possible selon les auteurs de l'article <strong>[1]</strong> de déterminer le meilleur σ en effectuant plusieurs fois l'algorithme jusquà la cinquième étape et en prenant le σ qui a conduit aux clusters avec le moins de distorsion.
+			</p>
+			<p>
+				Des discussions existent aussi sur la normalisation de cette matrice A comme peuvent le justifier les articles <strong>[5,7]</strong>. Nous verrons plus tard pourquoi cette normalisation peut s'avérer intéressante.
 			</p>
 			<h3><li>
 				Calcul de la matrice d'analyse L
 			</li></h3>
 			<p>
-				
+				Cette deuxième étape consiste à construire la matrice sur laquelle va porter l'analyse spectrale. Tout d'abord nous avons besoin de la matrice Diagonale D donc chaque élément D<sub>ii</sub> vaut la somme des éléments de la i-ème ligne de A. Grâce à cette matrice on peut construire la matrice L = D<sup>-1/2</sup>AD<sup>-1/2</sup>.
+			</p>
+			<p>
+				En s'appuyant sur la théorie de l'analyse spectrale <strong>[4]</strong> des discussions se sont ouvertes sur l'utilité de L. Certains proposent de travailler directement sur A <strong>[7]</strong> ou le Laplacien.
 			</p>
 			<h3><li>
 				Extraction des k vecteurs propres ayant les plus grandes valeurs propres
 			</li></h3>
 			<p>
-				
+				Cette troisième étape est l'enjeu majeur de l'algorithme proposé : on calcule les vecteurs propres de L et on utilise x<sub>1</sub>, x<sub>2</sub>, ..., x<sub>k</sub> les k plus importants vecteurs propres (par rapport à leur valeur propre) pour former la matrice X = [x<sub>1</sub> x<sub>2</sub> ... x<sub>k</sub>] de ℝ<sup>nxk</sup>.
+			</p>
+			<p>
+				L'article <strong>[11]</strong> justifie l'emploie des k seuls "premiers" vecteurs propres pour des raisons de stabilité. En effet, en considérant les valeurs propres triées par ordre décroissant, il faut choisir les vecteurs propres tels que le "gap propre" (distance) entre deux valeurs propres ne soit pas trop grand. Le nombre de clusters k semble ici adapté.
 			</p>
 			<h3><li>
 				Renormalisation de la matrice des k vecteurs propres
 			</li></h3>
 			<p>
-				
+				Pour cette quatrième étape on normalise la matrice X en une matrice Y telle que Y<sub>ij</sub> = X<sub>ij</sub>/(Σ<sub>j</sub> X<sub>ij</sub>²).
 			</p>
 			<h3><li>
 				Application d'un algorithme de clustering sur la matrice des vecteurs propres
 			</li></h3>
 			<p>
-				
+				Dans cette cinquième étape on peut appliquer n'importe quel algorithme de clustering (K-Means compris) pour traiter Y. L'algorithme choisi devra traiter chaque ligne de Y comme un point à traiter.
 			</p>
 			<h3><li>
 				Assignement des points au cluster de leur ligne de la matrice des vecteurs propres
 			</li></h3>
 			<p>
-				
+				Pour chaque ligne y<sub>i</sub> de Y, on affecte au point réel s<sub>i</sub> le cluster que lui a affecté l'étape 5. On obtient ainsi un clustering pour la liste de points S.
 			</p>
 		</ol>
+		Cet algorithme a longuement été étudié et nous allons maintenant nous intéresser aux détails de son implémentation.
 	</p>
 	<h2 class="soustitrearticle"> Implémentation</h2>
 	<p>
@@ -129,7 +142,7 @@
 				Calcul de la matrice d'analyse L
 			</li></h3>
 			<p>
-				Cette étape se décompose en deux phases. La première consiste à déterminer la matrice diagonale D où chaque élément de la diagonale correspond à la somme des éléments de la ligne correspondante de la matrice d'affinité. Ensuite, on construit la matrice d'analyse L comme étant D<sup>-1/2</sup>AD<sup>-1/2</sup>. L est normalisée.<br/>
+				Cette étape se décompose en deux phases. La première consiste à déterminer la matrice diagonale D où chaque élément de la diagonale correspond à la somme des éléments de la ligne correspondante de la matrice d'affinité. Ensuite, on construit la matrice d'analyse L = D<sup>-1/2</sup>AD<sup>-1/2</sup>. L est normalisée.<br/>
 
 				Ce travail est réalisé par les méthodes <code>SpectralClustering::GetDSqrtInvMatrix()</code> et <code>SpectralClustering::GetLMatrix()</code>.
 			</p>
