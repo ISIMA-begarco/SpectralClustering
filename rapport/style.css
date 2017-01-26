@@ -199,3 +199,19 @@ div#acces_rapide {
 .algo li {
 	list-style: symbols("0 - " "1 - " "2 - " "3 - " "4 - " "5 - " "6 - "); 
 }
+
+.image {
+  display: inline-block;
+  text-align: center;
+  border: 1px solid black;
+  margin-bottom: 1ex;
+}
+
+.image img, .image .legende {
+  display: table-row;
+}
+
+.TODO {
+  background-color: red;
+  font-variant: small-caps;
+}
