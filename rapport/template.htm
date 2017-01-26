@@ -113,44 +113,58 @@
 				Préparation des données 
 			</li></h3>
 			<p>
-				A partir de l'image source, on extrait les attributs: la <strong>moyenne</strong> et la <strong>variance</strong>. On réalise ce travail avec un masque 3x3. Ce choix se justifie par la quantité de mémoire nécessaire dans la suite du programme. En effet, nous avons dû utiliser des images de petite taille afin de pouvoir travailler en temps raisonnable.
-				<span class="TODO"> Vérifier normalisation</span>
+				A partir de l'image source, on extrait les attributs: la <strong>moyenne</strong> et la <strong>variance</strong>. On réalise ce travail avec un masque 3x3. Il s'agit d'un masque de petite taille. Ce choix se justifie par la quantité de mémoire nécessaire dans la suite du programme. En effet, nous avons dû utiliser des images de petite taille afin de pouvoir travailler en temps raisonnable.
+				Les valeurs obtenues sont ensuite normalisées pour faciliter le paramétrage de sigma.
 			</p>
 			<h3><li>
 				Calcul de la matrice d'affinité A
 			</li></h3>
 			<p>
-				Le calcul de la matrice d'affinité répond à la formule proposée <span  class="TODO">Référence interne ou biblio</span>
+				Le calcul de la matrice d'affinité répond à la formule proposée plus haut. Il s'agit donc d'une matrice de distances définissant la proximité entre les attributs associés à chaque pixel. Cette matrice est normalisée.<br/>
+
+				Ce travail est réalisé par la méthode <code>SpectralClustering::GetAffinityMatrix()</code>.
+
 			</p>
 			<h3><li>
 				Calcul de la matrice d'analyse L
 			</li></h3>
 			<p>
-				Cette étape se décompose en deux parties. La première consiste à déterminer une matrice diagonale D où chaque élément de la diagonale correspond à la somme des éléments de la ligne correspondante de la matrice d'affinité. Ensuite, on construit la matrice L comme étant D<sup>-1/2</sup>AD<sup>-1/2</sup>.
+				Cette étape se décompose en deux phases. La première consiste à déterminer la matrice diagonale D où chaque élément de la diagonale correspond à la somme des éléments de la ligne correspondante de la matrice d'affinité. Ensuite, on construit la matrice d'analyse L comme étant D<sup>-1/2</sup>AD<sup>-1/2</sup>. L est normalisée.<br/>
+
+				Ce travail est réalisé par les méthodes <code>SpectralClustering::GetDSqrtInvMatrix()</code> et <code>SpectralClustering::GetLMatrix()</code>.
 			</p>
 			<h3><li>
 				Extraction des k vecteurs propres ayant les plus grandes valeurs propres
 			</li></h3>
 			<p>
-				Pour réaliser cette étape, nous utilisons la bibliothèque CImg. On obtient alors les valeurs et vecteurs propres triés, il suffit de conserver les k premiers vecteurs.
+				Pour réaliser cette étape, nous utilisons la bibliothèque CImg. On obtient alors les valeurs et vecteurs propres triés, il suffit de conserver les k premiers vecteurs. <br/>
+
+				La matrice contenant ces vecteurs est normalisée.<br/>
+
+				Ce travail est réalisé en 2 lignes dans la méthode <code>SpectralClustering::GetEigenMatrix()</code>.
 			</p>
 			<h3><li>
 				Renormalisation de la matrice des k vecteurs propres
 			</li></h3>
 			<p>
-				La matrice des k vecteurs propres est normalisée pour que chaque ligne soit un vecteur de longueur unitaire.
+				La matrice des k vecteurs propres est normalisée pour que chaque ligne soit un vecteur de longueur unitaire. <br/>
+
+				Ce travail est obtenu par la méthode <code>SpectralClustering::GetNormalizedEigenMatrix()</code>.
 			</p>
 			<h3><li>
 				Application d'un algorithme de clustering sur la matrice des vecteurs propres
 			</li></h3>
 			<p>
-				Chaque ligne de la matrice est considérée comme un jeu de paramètres. Lorsque deux lignes se ressemblent, elles sont associées au même cluster.
+				Chaque ligne de la matrice est considérée comme un jeu de paramètres. Lorsque deux lignes se ressemblent, elles sont associées au même cluster.<br/>
+				Dans notre implémentation, nous avons employé l'algorithme des K-Means pour réaliser ces regroupements.
 			</p>
 			<h3><li>
 				Assignement des points au cluster de leur ligne de la matrice des vecteurs propres
 			</li></h3>
 			<p>
-				A partir des associations de l'étape précédente, les données représentées par chaque ligne sont clusterisées dans le cluster associé à la ligne.
+				A partir des associations de l'étape précédente, les données représentées par chaque ligne sont clusterisées dans le cluster associé à la ligne. <br/>
+
+				Cette partie est obtenue par lecture des résultats précédents dans <code>SpectralClustering::GetFinalClusteringImage()</code>.
 			</p>
 		</ol>
 	</p>
