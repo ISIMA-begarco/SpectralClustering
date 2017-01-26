@@ -16,7 +16,7 @@
 		Ce rapport a été rédigé dans le cadre d’un cours d’algorithmes pour le traitement d'image délivré par V. Barra et C. Tilmant, suivi à l’Institut Supérieur d’Informatique, de Modélisation et de leurs Applications (ISIMA). Il a pour but de présenter succinctement nos travaux sur le programme de clustering d'images basé sur de l'analyse spectrale. Ce document est un complément du programme implémenté en C++ et dont les aspects sont abordés plus loin.
 	</p>
 	<p>
-		Au cours de ce projet d'imagerie nous avons donc réussi à développer un programme paramétrable permettant d'extraire dans une image N ensembles de points ou zones à similarité élevée. Ce programme se base sur les travaux d'Andrew Y. Ng, Michael I. Jordan et Yair Weiss sur le clustering spectral en 2002 <strong>[1]</strong>.
+		Au cours de ce projet d'imagerie nous avons donc réussi à développer un programme paramétrable permettant d'extraire dans une image N ensembles de points ou zones à similarité élevée. Ce programme se base sur les travaux d'Andrew Y. Ng, Michael I. Jordan et Yair Weiss sur le clustering spectral en 2002 <strong><a href="#biblio-1">[1]</a></strong>.
 	</p>
 	<p>
 		L'idée générale de leur algorithme est assez simple : le coeur du travail consiste à partitionner l'image avec un algorithme classique des K-Means mais au lieu de baser la classification directement sur les paramètres des points, on effectue d'abord une analyse spectrale des points. Ainsi on s'abstrait d'un côté de l'espace des paramètres et on peut détecter des zones dites <strong>non-convexes</strong> là où un simple K-Means se limiterait à des formes convexes.
@@ -126,7 +126,7 @@
 				Préparation des données 
 			</li></h3>
 			<p>
-				A partir de l'image source, on extrait les attributs: la <strong>moyenne</strong> et la <strong>variance</strong>. On réalise ce travail avec un masque 3x3. Il s'agit d'un masque de petite taille. Ce choix se justifie par la quantité de mémoire nécessaire dans la suite du programme. En effet, nous avons dû utiliser des images de petite taille afin de pouvoir travailler en temps raisonnable.
+				A partir de l'image source, on extrait les attributs: la <strong>moyenne</strong> et la <strong>variance</strong>. On réalise ce travail avec un masque 3x3. Il s'agit d'un masque de petite taille. Ce choix se justifie par la quantité de mémoire nécessaire dans la suite du programme (cf. <a href="#discussion">Discussion</a>). En effet, nous avons dû utiliser des images de petite taille afin de pouvoir travailler en temps raisonnable.
 				Les valeurs obtenues sont ensuite normalisées pour faciliter le paramétrage de sigma.
 			</p>
 			<h3><li>
@@ -172,7 +172,7 @@
 				Dans notre implémentation, nous avons employé l'algorithme des K-Means pour réaliser ces regroupements.
 			</p>
 			<h3><li>
-				Assignement des points au cluster de leur ligne de la matrice des vecteurs propres
+				Assignement des points au cluster de leur ligne dans la matrice des vecteurs propres
 			</li></h3>
 			<p>
 				A partir des associations de l'étape précédente, les données représentées par chaque ligne sont clusterisées dans le cluster associé à la ligne. <br/>
@@ -187,34 +187,41 @@
 	<h2 class="soustitrearticle">Validation sur données de synthèse</h2>
 	<p>
 		Nous avons créé des images pour réaliser nos tests:
-		<div class="image">
-			<img src="../tests/test1.bmp" alt="test1.bmp"/>
-			<span class="legende">test1.bmp</span>
-		</div>
-		<div class="image">
-			<img src="../tests/test2.bmp" alt="test2.bmp"/>
-			<span class="legende">test2.bmp</span>
-		</div>
-		<div class="image">
-			<img src="../tests/test3.bmp" alt="test3.bmp"/>
-			<span class="legende">test3.bmp</span>
-		</div>
-		<div class="image">
-			<img src="../tests/test4.bmp" alt="test4.bmp"/>
-			<span class="legende">test4.bmp</span>
-		</div>
-		<div class="image">
-			<img src="../tests/test5.bmp" alt="test5.bmp"/>
-			<span class="legende">test5.bmp</span>
-		</div>
-		<div class="image">
-			<img src="../tests/test6.bmp" alt="test6.bmp"/>
-			<span class="legende">test6.bmp</span>
-		</div>
-		<div class="image">
-			<img src="../tests/test7.bmp" alt="test7.bmp"/>
-			<span class="legende">test7.bmp</span>
-		</div>
+	</p>
+	<table>
+	<tbody>
+		<tr>
+			<td><div class="image">
+				<img src="../tests/test1.bmp" alt="test1.bmp"/>
+				<span class="legende">test1.bmp</span>
+			</div></td>
+			<td><div class="image">
+				<img src="../tests/test2.bmp" alt="test2.bmp"/>
+				<span class="legende">test2.bmp</span>
+			</div></td>
+			<td><div class="image">
+				<img src="../tests/test3.bmp" alt="test3.bmp"/>
+				<span class="legende">test3.bmp</span>
+			</div></td>
+			<td><div class="image">
+				<img src="../tests/test4.bmp" alt="test4.bmp"/>
+				<span class="legende">test4.bmp</span>
+			</div></td>
+			<td><div class="image">
+				<img src="../tests/test5.bmp" alt="test5.bmp"/>
+				<span class="legende">test5.bmp</span>
+			</div></td>
+			<td><div class="image">
+				<img src="../tests/test6.bmp" alt="test6.bmp"/>
+				<span class="legende">test6.bmp</span>
+			</div></td>
+			<td><div class="image">
+				<img src="../tests/test7.bmp" alt="test7.bmp"/>
+				<span class="legende">test7.bmp</span>
+			</div></td>
+		</tr>
+	</tbody>
+	</table>
 	</p>
 	<p>
 		Ces tests nous ont permis d'obtenir les résultats suivants:
@@ -223,34 +230,34 @@
 	<thead><tr><th></th><th colspan="7"></th></tr></thead>
 	<tbody>
 		<tr>
-			<td>2 clusters<br/>sigma=25.0</td>
+			<td>2 clusters</td>
 			<td><div class="image">
 				<img src="../tests/2/test1.bmp_res.bmp" alt="test1.bmp"/>
-				<span class="legende">test1.bmp</span>
+				<span class="legende">test1.bmp<br/>sigma=25.0</span>
 			</div></td>
 			<td><div class="image">
-				<img src="../tests/2/test2.bmp_res.bmp" alt="test2.bmp"/>
-				<span class="legende">test2.bmp</span>
+				<img src="../tests/2/test2_c2_s06_res.bmp" alt="test2.bmp"/>
+				<span class="legende">test2.bmp<br/>sigma=6.0</span>
 			</div></td>
 			<td><div class="image">
 				<img src="../tests/2/test3.bmp_res.bmp" alt="test3.bmp"/>
-				<span class="legende">test3.bmp</span>
+				<span class="legende">test3.bmp<br/>sigma=25.0</span>
 			</div></td>
 			<td><div class="image">
-				<img src="../tests/2/test4.bmp_res.bmp" alt="test4.bmp"/>
-				<span class="legende">test4.bmp</span>
+				<img src="../tests/2/test4_c2_s03_res.bmp" alt="test4.bmp"/>
+				<span class="legende">test4.bmp<br/>sigma=3.0</span>
 			</div></td>
 			<td><div class="image">
 				<img src="../tests/2/test5.bmp_res.bmp" alt="test5.bmp"/>
-				<span class="legende">test5.bmp</span>
+				<span class="legende">test5.bmp<br/>sigma=25.0</span>
 			</div></td>
 			<td><div class="image">
 				<img src="../tests/2/test6.bmp_res.bmp" alt="test6.bmp"/>
-				<span class="legende">test6.bmp</span>
+				<span class="legende">test6.bmp<br/>sigma=25.0</span>
 			</div></td>
 			<td><div class="image">
 				<img src="../tests/2/test7.bmp_res.bmp" alt="test7.bmp"/>
-				<span class="legende">test7.bmp</span>
+				<span class="legende">test7.bmp<br/>sigma=25.0</span>
 			</div></td>
 		</tr>
 		<tr>
@@ -258,12 +265,15 @@
 			<td></td>
 			<td></td>
 			<td></td>
+			<td></td>
 			<td><div class="image">
-				<img src="../tests/3/test4.bmp_res.bmp" alt="test4.bmp"/>
-				<span class="legende">test4.bmp</span>
+				<img src="../tests/3/test5_c3_s18_res.bmp" alt="test5.bmp"/>
+				<span class="legende">test5.bmp<br/>sigma=18.0</span>
 			</div></td>
-			<td></td>
-			<td></td>
+			<td><div class="image">
+				<img src="../tests/3/test6_c3_s18_res.bmp" alt="test6.bmp"/>
+				<span class="legende">test6.bmp<br/>sigma=18.0</span>
+			</div></td>
 			<td></td>
 		</tr>
 	</tbody>
@@ -274,7 +284,7 @@
 		Une fois la méthode évaluée, vous appliquerez votre méthode sur des images réelles.
 	</p>
 	<br/>
-	<h1 class="titrearticle">Discussion</h1>
+	<h1 class="titrearticle" id="discussion">Discussion</h1>
 	<p>
 		Comme on peut le voir dans la section précédente, les résultats sont plutôt concordant avec les axes d'amélioration d'un algorithme naïf de K-Means. On constate bien qu'il est maintenant possible de caractériser des ensembles non convexes de points contrairement à un algorithme classique. On arrive à s'abstraire donc de la distance dans le plan de l'image pour analyser les propriétés des points et en tirer des ensembles plus cohérent. Dans un algorithme naïf par exemple, le cercle aurait au mieux donné un disque alors qu'ici nous obtenons bien un disque. Il en est de même pour les caractères qui comme dans l'article étudié auraient été séparés selon les distances spatiales.
 	</p>
@@ -288,18 +298,18 @@
 	<h1 class="titrearticle">Références</h1>
 	<p>
 		<ul class="references">
-			<li>[1] Andrew Y Ng, Michael I Jordan, and Yair Weiss. On Spectral Clustering: Analysis and an algorithm. Advances in Neural Information Processing Systems, pages 849-856, 2001.</li>
-			<li>[2] Charles J. Alpert , Andrew B. Kahng , So-Zen Yao, Spectral partitioning with multiple eigenvectors, Discrete Applied Mathematics, v.90 n.1-3, p.3-26, Jan. 15, 1999</li>
-			<li>[3] N. Christianini, J. Shawe-Taylor, and J. Kandola. Spectral kernel methods for clustering. In Neural Information Processing Systems 14, 2002.</li>
-			<li>[4] F. Chung. Spectral Graph Theory. Number 92 in CBMS Regional Conference Series in Mathematics. American Mathematical Society, 1997.</li>
-			<li>[5] R. Kannan , S. Vempala , A. Veta, On clusterings-good, bad and spectral, Proceedings of the 41st Annual Symposium on Foundations of Computer Science, p.367, November 12-14, 2000</li>
-			<li>[6] J. Malik, S. Belongie, T. Leung, and J. Shi. Contour and texture analysis for image segmentation. In Perceptual Organization for Artificial Vision Systems. Kluwcr, 2000,</li>
-			<li>[7] M. Meila and J. Shi. Learning segmentation by random walks. In Neural Information Processing Systems 13. 2001.</li>
-			<li>[8] Bernhard Schölkopf , Alexander Smola , Klaus-Robert Müller, Nonlinear component analysis as a kernel eigenvalue problem, Neural Computation, v.10 n.5, p.1299-1319, July 1, 1998</li>
-			<li>[9] G. Scott and H. Longuet-Higgins. Feature grouping by relocalisation of eigenvectors of the proximity matrix. In Proc. British Machine Vision Conference, 1990.</li>
-			<li>[10] D. A. Spielmat, Spectral partitioning works: planar graphs and finite element meshes, Proceedings of the 37th Annual Symposium on Foundations of Computer Science, p.96, October 14-16, 1996</li>
-			<li>[11] G. W. Stewart and J.-G. Sun. Matrix Perturbation Theory. Academic Press, 1990.</li>
-			<li>[12] Yair Weiss, Segmentation Using Eigenvectors: A Unifying View, Proceedings of the International Conference on Computer Vision-Volume 2, p.975, September 20-25, 1999</li>
+			<li id="biblio-1">[1] Andrew Y Ng, Michael I Jordan, and Yair Weiss. On Spectral Clustering: Analysis and an algorithm. Advances in Neural Information Processing Systems, pages 849-856, 2001.</li>
+			<li id="biblio-2">[2] Charles J. Alpert , Andrew B. Kahng , So-Zen Yao, Spectral partitioning with multiple eigenvectors, Discrete Applied Mathematics, v.90 n.1-3, p.3-26, Jan. 15, 1999</li>
+			<li id="biblio-3">[3] N. Christianini, J. Shawe-Taylor, and J. Kandola. Spectral kernel methods for clustering. In Neural Information Processing Systems 14, 2002.</li>
+			<li id="biblio-4">[4] F. Chung. Spectral Graph Theory. Number 92 in CBMS Regional Conference Series in Mathematics. American Mathematical Society, 1997.</li>
+			<li id="biblio-5">[5] R. Kannan , S. Vempala , A. Veta, On clusterings-good, bad and spectral, Proceedings of the 41st Annual Symposium on Foundations of Computer Science, p.367, November 12-14, 2000</li>
+			<li id="biblio-6">[6] J. Malik, S. Belongie, T. Leung, and J. Shi. Contour and texture analysis for image segmentation. In Perceptual Organization for Artificial Vision Systems. Kluwcr, 2000,</li>
+			<li id="biblio-7">[7] M. Meila and J. Shi. Learning segmentation by random walks. In Neural Information Processing Systems 13. 2001.</li>
+			<li id="biblio-8">[8] Bernhard Schölkopf , Alexander Smola , Klaus-Robert Müller, Nonlinear component analysis as a kernel eigenvalue problem, Neural Computation, v.10 n.5, p.1299-1319, July 1, 1998</li>
+			<li id="biblio-9">[9] G. Scott and H. Longuet-Higgins. Feature grouping by relocalisation of eigenvectors of the proximity matrix. In Proc. British Machine Vision Conference, 1990.</li>
+			<li id="biblio-10">[10] D. A. Spielmat, Spectral partitioning works: planar graphs and finite element meshes, Proceedings of the 37th Annual Symposium on Foundations of Computer Science, p.96, October 14-16, 1996</li>
+			<li id="biblio-11">[11] G. W. Stewart and J.-G. Sun. Matrix Perturbation Theory. Academic Press, 1990.</li>
+			<li id="biblio-12">[12] Yair Weiss, Segmentation Using Eigenvectors: A Unifying View, Proceedings of the International Conference on Computer Vision-Volume 2, p.975, September 20-25, 1999</li>
 		</ul>
 	</p>
 </body>
