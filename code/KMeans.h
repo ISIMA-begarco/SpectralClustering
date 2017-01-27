@@ -1,3 +1,10 @@
+/***********************************************
+	B. GARCON & P.-L. PISSAVY
+
+			Spectral Clustering
+
+************************************************/
+
 #ifndef KMEANS_H
 #define KMEANS_H
 
@@ -5,6 +12,11 @@
 
 #include "ClusteringAlgorithm.h"
 
+/*******************************************************************************
+	
+			Classe d'implémentation des K-Means
+
+*******************************************************************************/
 class KMeans : public ClusteringAlgorithm {
     public:
         KMeans();
@@ -13,6 +25,7 @@ class KMeans : public ClusteringAlgorithm {
         virtual CImg<float> operator()(CImg<float>&,int);
 
     protected:
+		/// generateur aleatoire
         std::mt19937 gen;
 
     private:
@@ -22,6 +35,7 @@ class KMeans : public ClusteringAlgorithm {
         CImgList<> GetNewCenters(CImg<float> &,CImg<float> &,int);
         float GetError(CImg<float> &,CImg<float> &,CImgList<> &);
         float HasChanged(CImg<float> &,CImg<float> &);
+		/// methode d'execution appelee dans le foncteur
         CImg<float> execute(CImg<float>&,int);
 
 };

@@ -1,3 +1,10 @@
+/***********************************************
+	B. GARCON & P.-L. PISSAVY
+
+			Spectral Clustering
+
+************************************************/
+
 #include "SpectralClustering.h"
 
 #include <cmath>

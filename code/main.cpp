@@ -1,3 +1,10 @@
+/***********************************************
+	B. GARCON & P.-L. PISSAVY
+
+			Spectral Clustering
+
+************************************************/
+
 #include <iostream>
 #include <string>
 
@@ -7,6 +14,11 @@
 using namespace cimg_library;
 using namespace std;
 
+/*******************************************************************************
+	
+			Programme principal
+
+*******************************************************************************/
 int main(int argc, const char* argv []) {
     string file = argc > 1 ? argv[1] : "convexe.bmp";
     CImg<float> img = CImg<>(file.c_str()).channel(0);
@@ -18,9 +30,11 @@ int main(int argc, const char* argv []) {
 
     CImg<float> etiquette = algo(img,ncl);
     etiquette.normalize(0,255);
-
+	
+	/// enregistrement du resultat
     file += "_res.bmp";
     etiquette.save(file.c_str());
+	
     /*
     // Affichage finale
     CImgDisplay dispImg(img,"Image originale");
@@ -31,5 +45,6 @@ int main(int argc, const char* argv []) {
         dispRes.wait();
     }
     */
+	
     return 0;
 }
