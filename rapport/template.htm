@@ -10,13 +10,13 @@
 
 <body>
 	<h1>On Spectral Clustering: Analysis and an algorithm</h1>
-	<h3>Benoît Garçon & Pierre-Loup Pissavy, PROMO 17 F2</h3>
+	<h3>Benoît Garçon et Pierre-Loup Pissavy, PROMO 17 F2</h3>
 	<h1 class="titrearticle"> Présentation du sujet </h1>
 	<p>
 		Ce rapport a été rédigé dans le cadre d’un cours d’algorithmes pour le traitement d'image délivré par V. Barra et C. Tilmant, suivi à l’Institut Supérieur d’Informatique, de Modélisation et de leurs Applications (ISIMA). Il a pour but de présenter succinctement nos travaux sur le programme de clustering d'images basé sur de l'analyse spectrale. Ce document est un complément du programme implémenté en C++ et dont les aspects sont abordés plus loin.
 	</p>
 	<p>
-		Au cours de ce projet d'imagerie nous avons donc réussi à développer un programme paramétrable permettant d'extraire dans une image N ensembles de points ou zones à similarité élevée. Ce programme se base sur les travaux d'Andrew Y. Ng, Michael I. Jordan et Yair Weiss sur le clustering spectral en 2002 <strong><a href="#biblio-1">[1]</a></strong>.
+		Au cours de ce projet d'imagerie nous avons donc réussi à développer un programme paramétrable permettant d'extraire dans une image N ensembles de points ou zones à similarité élevée. Ce programme se base sur les travaux d'Andrew Y. Ng, Michael I. Jordan et Yair Weiss sur le clustering spectral en 2002 <strong>[1]</strong>.
 	</p>
 	<p>
 		L'idée générale de leur algorithme est assez simple : le coeur du travail consiste à partitionner l'image avec un algorithme classique des K-Means mais au lieu de baser la classification directement sur les paramètres des points, on effectue d'abord une analyse spectrale des points. Ainsi on s'abstrait d'un côté de l'espace des paramètres et on peut détecter des zones dites <strong>non-convexes</strong> là où un simple K-Means se limiterait à des formes convexes.
@@ -286,8 +286,133 @@
 		</tr>
 	</tbody>
 	</table>
-	
-	<h2 class="soustitrearticle">Données réelles</h2>
+    
+    Nous avons aussi fait une étude temporelle sur le temps de génération du résultat par rapport à la taille de l'image. Les résultats suivants ont été réalisés sur un Mac doté d'un processeur i5 et de 12Go de mémoire RAM.
+    
+    <table>
+        <thead><tr><th></th><th colspan="8">Etude du temps d'exécution en fonction de la taille des images</th></tr></thead>
+        <tbody>
+            <tr>
+                <td>Modèle</td>
+                <td><div class="image">
+                    <img src="../tests/img/img_4.bmp" alt="img_4.bmp"/>
+                    <span class="legende">img_4.bmp<br/>σ=25.0</span>
+                </div></td>
+                <td><div class="image">
+                    <img src="../tests/img/img_8.bmp" alt="img_8.bmp"/>
+                    <span class="legende">img_8.bmp<br/>σ=6.0</span>
+                </div></td>
+                <td><div class="image">
+                    <img src="../tests/img/img_16.bmp" alt="img_16.bmp"/>
+                    <span class="legende">img_16.bmp<br/>σ=25.0</span>
+                </div></td>
+                <td><div class="image">
+                    <img src="../tests/img/img_32.bmp" alt="img_32.bmp"/>
+                    <span class="legende">img_32.bmp<br/>σ=3.0</span>
+                </div></td>
+                <td><div class="image">
+                    <img src="../tests/img/img_64.bmp" alt="img_64.bmp"/>
+                    <span class="legende">img_64.bmp<br/>σ=25.0</span>
+                </div></td>
+                <td><div class="image">
+                    <img src="../tests/img/img_128.bmp" alt="img_128.bmp"/>
+                    <span class="legende">img_128.bmp<br/>σ=25.0</span>
+                </div></td>
+            </tr>
+            <tr>
+                <td>Résultats</td>
+                <td><div class="image">
+                    <img src="../tests/img/img_4.bmp_res.bmp" alt="img_4.bmp"/>
+                    <span class="legende">img_4.bmp<br/>σ=25.0</span>
+                </div></td>
+                <td><div class="image">
+                    <img src="../tests/img/img_8.bmp_res.bmp" alt="img_8.bmp"/>
+                    <span class="legende">img_8.bmp<br/>σ=6.0</span>
+                </div></td>
+                <td><div class="image">
+                    <img src="../tests/img/img_16.bmp_res.bmp" alt="img_16.bmp"/>
+                    <span class="legende">img_16.bmp<br/>σ=25.0</span>
+                </div></td>
+                <td><div class="image">
+                    <img src="../tests/img/img_32.bmp_res.bmp" alt="img_32.bmp"/>
+                    <span class="legende">img_32.bmp<br/>σ=3.0</span>
+                </div></td>
+                <td><div class="image">
+                    <img src="../tests/img/img_64.bmp_res.bmp" alt="img_64.bmp"/>
+                    <span class="legende">img_64.bmp<br/>σ=25.0</span>
+                </div></td>
+                <td><div class="image">
+                    <img src="../tests/img/img_128.bmp_res.bmp" alt="img_128.bmp"/>
+                    <span class="legende">img_128.bmp<br/>σ=25.0</span>
+                </div></td>
+            </tr>
+            <tr>
+                <td>Dimensions</td>
+                <td><div class="image">
+                    <span class="legende">4 x 4<br/>16 pixels</span>
+                </div></td>
+                <td><div class="image">
+                    <span class="legende">8 x 8<br/>64 pixels</span>
+                </div></td>
+                <td><div class="image">
+                    <span class="legende">16 x 16<br/>256 pixels</span>
+                </div></td>
+                <td><div class="image">
+                    <span class="legende">32 x 32<br/>1024 pixels</span>
+                </div></td>
+                <td><div class="image">
+                    <span class="legende">64 x 64<br/>4096 pixels</span>
+                </div></td>
+                <td><div class="image">
+                    <span class="legende">128 x 128<br/>16384 pixels</span>
+                </div></td>
+            </tr>
+            <tr>
+                <td>Matrice d'affinité</td>
+                <td><div class="image">
+                    <span class="legende">16 x 16<br/>256 cellules</span>
+                </div></td>
+                <td><div class="image">
+                    <span class="legende">64 x 64<br/>4 096 cellules</span>
+                </div></td>
+                <td><div class="image">
+                    <span class="legende">256 x 256<br/>65 536 cellules</span>
+                </div></td>
+                <td><div class="image">
+                    <span class="legende">1024 x 1024<br/>1 048 576 cellules</span>
+                </div></td>
+                <td><div class="image">
+                    <span class="legende">4096 x 4096<br/>16 777 216 cellules</span>
+                </div></td>
+                <td><div class="image">
+                    <span class="legende">16384 x 16384<br/>268 435 456 cellules</span>
+                </div></td>
+            </tr>
+            <tr>
+                <td>Temps d'exécution</td>
+                <td><div class="image">
+                    <span class="legende">0.006s</span>
+                </div></td>
+                <td><div class="image">
+                    <span class="legende">0.006s</span>
+                </div></td>
+                <td><div class="image">
+                    <span class="legende">0.153s</span>
+                </div></td>
+                <td><div class="image">
+                    <span class="legende">18.800s</span>
+                </div></td>
+                <td><div class="image">
+                    <span class="legende">54m28.576s</span>
+                </div></td>
+                <td><div class="image">
+                    <span class="legende">???s</span>
+                </div></td>
+            </tr>
+        </tbody>
+    </table>
+    
+    <h2 class="soustitrearticle">Données réelles</h2>
 	<p>
 		Nous avons ensuite appliqué notre programme sur l'image de Lena.
 	</p>
@@ -307,7 +432,11 @@
 			<td><div class="image">
 				<img src="../tests/lena_32.bmp" alt="lena_32.bmp"/>
 				<span class="legende">lena_32.bmp<br/>32px</span>
-			</div></td>
+            </div></td>
+            <td><div class="image">
+                <img src="../tests/homer_48.bmp" alt="homer_48.bmp"/>
+                <span class="legende">homer_48.bmp<br/>σ=25.0</span>
+            </div></td>
 		</tr>
 		<tr>
 			<td>6 Clusters</td>
@@ -318,12 +447,16 @@
 			<td><div class="image">
 				<img src="../tests/lena_48_c6_s25_res.bmp" alt="lena_48_c6_s25_res.bmp"/>
 				<span class="legende">lena_48.bmp<br/>σ=25.0</span>
-			</div></td>
-			<td><div class="image">
-				<img src="../tests/lena_32_c6_s25_res.bmp" alt="lena_32_c6_s25_res.bmp"/>
-				<span class="legende">lena_32.bmp<br/>σ=25.0</span>
-			</div></td>
-		</tr>
+            </div></td>
+            <td><div class="image">
+                <img src="../tests/lena_32_c6_s25_res.bmp" alt="lena_32_c6_s25_res.bmp"/>
+                <span class="legende">lena_32.bmp<br/>σ=25.0</span>
+            </div></td>
+            <td><div class="image">
+                <img src="../tests/homer_48.bmp_res.bmp" alt="homer_48.bmp_res.bmp"/>
+                <span class="legende">homer_48.bmp<br/>σ=25.0</span>
+            </div></td>
+        </tr>
 	</tbody>
 	</table>
 	<br/>
@@ -334,6 +467,9 @@
 	<p>
 		D'un point de vue plus pratique le programme manipule des données de taille très importante : si l'on considère une image de taille WxH alors notre programme manipulera des matrices de dimension (W*L) x (W*L). Concrètement, une image de taille moyenne 512x256 par exemple, comporte donc 131 072 pixels qui va générer une matrice d'affinité de taille 131072x131072 soit une matrice de plus de 17 milliard d'éléments et si on considère 3 octets par élément on manipulera donc des matrices de plus de 48Go. Malgré l'usage intensif de références et de suppressions de copies, les machines à notre disposition ne sont pas capables de traiter des données de cette taille raisonnablement, sans parler des dépassements de mémoire.
 	</p>
+    <p>
+        Concernant le temps d'exécution on remarque facilement que le temps d'exécution augmente exponentiellement avec la taille des images et donc la taille des matrices. Un tel algorithme devient difficilement applicable sur de grandes images si l'on ne dispose pas de matériel adapté.
+    </p>
 	<p>
 		C'est pourquoi nous avons travaillé sur des échantillons d'images de taille réduite. Il a donc aussi fallu revoir la taille des voisinages pour palier à la faible taille des images pour ne pas perdre trop d'information au calcul des paramètres des points.
 	</p>
