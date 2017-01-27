@@ -103,7 +103,7 @@
 			<strong>nb_classes</strong> : le nombre de classes k que l'on veut obtenir
 		</li>
 		<li>
-			<strong>sigma</strong> : le paramètre de controle de la plongée de la matrice d'affinité
+			<strong>σ</strong> : le paramètre de controle de la plongée de la matrice d'affinité
 		</li>
 	</ul>
 	<p>
@@ -128,7 +128,7 @@
 			</li></h3>
 			<p>
 				A partir de l'image source, on extrait les attributs de chaque pixel : la <strong>moyenne</strong> et la <strong>variance</strong>. Cette liste d'attributs va constituer nos points à clusteriser. On réalise ce travail avec un masque 3x3. Il s'agit d'un masque de petite taille. Ce choix se justifie par la quantité de mémoire nécessaire dans la suite du programme (cf. <a href="#discussion">Discussion</a>). En effet, nous avons dû utiliser des images de petite taille afin de pouvoir travailler en temps raisonnable.
-				Les valeurs obtenues sont ensuite normalisées pour faciliter le paramétrage de sigma.
+				Les valeurs obtenues sont ensuite normalisées pour faciliter le paramétrage de σ.
 			</p>
 			<h3><li>
 				Calcul de la matrice d'affinité A
@@ -218,6 +218,10 @@
 				<img src="../tests/test7.bmp" alt="test7.bmp"/>
 				<span class="legende">test7.bmp</span>
 			</div></td>
+			<td><div class="image">
+				<img src="../tests/test8.bmp" alt="test8.bmp"/>
+				<span class="legende">test8.bmp</span>
+			</div></td>
 		</tr>
 	</tbody>
 	</table>
@@ -226,38 +230,39 @@
 		Ces tests nous ont permis d'obtenir les résultats suivants:
 	</p>
 	<table>
-	<thead><tr><th></th><th colspan="7"></th></tr></thead>
+	<thead><tr><th></th><th colspan="8">Résultats</th></tr></thead>
 	<tbody>
 		<tr>
 			<td>2 clusters</td>
 			<td><div class="image">
 				<img src="../tests/2/test1.bmp_res.bmp" alt="test1.bmp"/>
-				<span class="legende">test1.bmp<br/>sigma=25.0</span>
+				<span class="legende">test1.bmp<br/>σ=25.0</span>
 			</div></td>
 			<td><div class="image">
 				<img src="../tests/2/test2_c2_s06_res.bmp" alt="test2.bmp"/>
-				<span class="legende">test2.bmp<br/>sigma=6.0</span>
+				<span class="legende">test2.bmp<br/>σ=6.0</span>
 			</div></td>
 			<td><div class="image">
 				<img src="../tests/2/test3.bmp_res.bmp" alt="test3.bmp"/>
-				<span class="legende">test3.bmp<br/>sigma=25.0</span>
+				<span class="legende">test3.bmp<br/>σ=25.0</span>
 			</div></td>
 			<td><div class="image">
 				<img src="../tests/2/test4_c2_s03_res.bmp" alt="test4.bmp"/>
-				<span class="legende">test4.bmp<br/>sigma=3.0</span>
+				<span class="legende">test4.bmp<br/>σ=3.0</span>
 			</div></td>
 			<td><div class="image">
 				<img src="../tests/2/test5.bmp_res.bmp" alt="test5.bmp"/>
-				<span class="legende">test5.bmp<br/>sigma=25.0</span>
+				<span class="legende">test5.bmp<br/>σ=25.0</span>
 			</div></td>
 			<td><div class="image">
 				<img src="../tests/2/test6.bmp_res.bmp" alt="test6.bmp"/>
-				<span class="legende">test6.bmp<br/>sigma=25.0</span>
+				<span class="legende">test6.bmp<br/>σ=25.0</span>
 			</div></td>
 			<td><div class="image">
 				<img src="../tests/2/test7.bmp_res.bmp" alt="test7.bmp"/>
-				<span class="legende">test7.bmp<br/>sigma=25.0</span>
+				<span class="legende">test7.bmp<br/>σ=25.0</span>
 			</div></td>
+			<td></td>
 		</tr>
 		<tr>
 			<td>3 clusters</td>
@@ -267,21 +272,60 @@
 			<td></td>
 			<td><div class="image">
 				<img src="../tests/3/test5_c3_s18_res.bmp" alt="test5.bmp"/>
-				<span class="legende">test5.bmp<br/>sigma=18.0</span>
+				<span class="legende">test5.bmp<br/>σ=18.0</span>
 			</div></td>
 			<td><div class="image">
 				<img src="../tests/3/test6_c3_s18_res.bmp" alt="test6.bmp"/>
-				<span class="legende">test6.bmp<br/>sigma=18.0</span>
+				<span class="legende">test6.bmp<br/>σ=18.0</span>
 			</div></td>
-			<td></td>
+			<td></td>			
+			<td><div class="image">
+				<img src="../tests/3/test8_c3_s35_res.bmp" alt="test8.bmp"/>
+				<span class="legende">test8.bmp<br/>σ=35.0</span>
+			</div></td>
 		</tr>
 	</tbody>
 	</table>
 	
 	<h2 class="soustitrearticle">Données réelles</h2>
-	<p class="TODO">
-		Une fois la méthode évaluée, vous appliquerez votre méthode sur des images réelles.
+	<p>
+		Nous avons ensuite appliqué notre programme sur l'image de Lena.
 	</p>
+	<table>
+	<thead><tr><th></th><th colspan="4">Lena</th></tr></thead>
+	<tbody>
+		<tr>
+			<td>Images originales</td>
+			<td><div class="image">
+				<img src="../tests/lena.bmp" alt="lena.bmp"/>
+				<span class="legende">lena.bmp<br/>64px</span>
+			</div></td>
+			<td><div class="image">
+				<img src="../tests/lena_48.bmp" alt="lena_48.bmp"/>
+				<span class="legende">lena_48.bmp<br/>48px</span>
+			</div></td>
+			<td><div class="image">
+				<img src="../tests/lena_32.bmp" alt="lena_32.bmp"/>
+				<span class="legende">lena_32.bmp<br/>32px</span>
+			</div></td>
+		</tr>
+		<tr>
+			<td>6 Clusters</td>
+			<td><div class="image">
+				<img src="../tests/lena_c6_s25_res.bmp" alt="lena_c6_s25_res.bmp"/>
+				<span class="legende">lena.bmp<br/>σ=25.0</span>
+			</div></td>
+			<td><div class="image">
+				<img src="../tests/lena_48_c6_s25_res.bmp" alt="lena_48_c6_s25_res.bmp"/>
+				<span class="legende">lena_48.bmp<br/>σ=25.0</span>
+			</div></td>
+			<td><div class="image">
+				<img src="../tests/lena_32_c6_s25_res.bmp" alt="lena_32_c6_s25_res.bmp"/>
+				<span class="legende">lena_32.bmp<br/>σ=25.0</span>
+			</div></td>
+		</tr>
+	</tbody>
+	</table>
 	<br/>
 	<h1 class="titrearticle" id="discussion">Discussion</h1>
 	<p>
