@@ -64,7 +64,7 @@
 				Extraction des k vecteurs propres ayant les plus grandes valeurs propres
 			</li></h3>
 			<p>
-				Cette troisième étape est l'enjeu majeur de l'algorithme proposé : on calcule les vecteurs propres de L et on utilise x<sub>1</sub>, x<sub>2</sub>, ..., x<sub>k</sub> les k plus importants vecteurs propres (par rapport à leur valeur propre) pour former la matrice X = [x<sub>1</sub> x<sub>2</sub> ... x<sub>k</sub>] de ℝ<sup>nxk</sup>.
+				Cette troisième étape est l'enjeu majeur de l'algorithme proposé : on calcule les vecteurs propres de L et on utilise x<sub>1</sub>, x<sub>2</sub>, ..., x<sub>k</sub> les k plus importants vecteurs propres (par rapport à leur valeur propre) pour former la matrice X = [x<sub>1</sub> x<sub>2</sub> ... x<sub>k</sub>] de ℝ<sup>nxk</sup>. L étant une matrice symétrique, le calcul des vecteurs et valeurs propres en est simplifié.
 			</p>
 			<p>
 				L'article <strong>[11]</strong> justifie l'emploie des k seuls "premiers" vecteurs propres pour des raisons de stabilité. En effet, en considérant les valeurs propres triées par ordre décroissant, il faut choisir les vecteurs propres tels que le "gap propre" (distance) entre deux valeurs propres ne soit pas trop grand. Le nombre de clusters k semble ici adapté.
@@ -121,19 +121,20 @@
 		</li>
 	</ul>
 	<p>
+		Passons maintenant à l'explication des différentes phases de l'implémentation de l'algorithme à l'aide de CImg.
 		<ol class="algo">
 			<h3><li>
 				Préparation des données 
 			</li></h3>
 			<p>
-				A partir de l'image source, on extrait les attributs: la <strong>moyenne</strong> et la <strong>variance</strong>. On réalise ce travail avec un masque 3x3. Il s'agit d'un masque de petite taille. Ce choix se justifie par la quantité de mémoire nécessaire dans la suite du programme (cf. <a href="#discussion">Discussion</a>). En effet, nous avons dû utiliser des images de petite taille afin de pouvoir travailler en temps raisonnable.
+				A partir de l'image source, on extrait les attributs de chaque pixel : la <strong>moyenne</strong> et la <strong>variance</strong>. Cette liste d'attributs va constituer nos points à clusteriser. On réalise ce travail avec un masque 3x3. Il s'agit d'un masque de petite taille. Ce choix se justifie par la quantité de mémoire nécessaire dans la suite du programme (cf. <a href="#discussion">Discussion</a>). En effet, nous avons dû utiliser des images de petite taille afin de pouvoir travailler en temps raisonnable.
 				Les valeurs obtenues sont ensuite normalisées pour faciliter le paramétrage de sigma.
 			</p>
 			<h3><li>
 				Calcul de la matrice d'affinité A
 			</li></h3>
 			<p>
-				Le calcul de la matrice d'affinité répond à la formule proposée plus haut. Il s'agit donc d'une matrice de distances définissant la proximité entre les attributs associés à chaque pixel. Cette matrice est normalisée.<br/>
+				Le calcul de la matrice d'affinité répond à la formule proposée plus haut. Il s'agit donc d'une matrice de distances définissant la proximité entre les attributs associés à chaque pixel. Cette matrice est normalisée afin de pallier aux problèmes de dépassement des réels.<br/>
 
 				Ce travail est réalisé par la méthode <code>SpectralClustering::GetAffinityMatrix()</code>.
 
@@ -150,9 +151,7 @@
 				Extraction des k vecteurs propres ayant les plus grandes valeurs propres
 			</li></h3>
 			<p>
-				Pour réaliser cette étape, nous utilisons la bibliothèque CImg. On obtient alors les valeurs et vecteurs propres triés, il suffit de conserver les k premiers vecteurs. <br/>
-
-				La matrice contenant ces vecteurs est normalisée.<br/>
+				Pour réaliser cette étape, nous utilisons la bibliothèque CImg. On obtient alors avec <code>get_symmetric_eigen()</code> les valeurs et vecteurs propres triés comme nécessaire, il suffit de conserver les k premiers vecteurs avec <code>columns()</code>. <br/>
 
 				Ce travail est réalisé en 2 lignes dans la méthode <code>SpectralClustering::GetEigenMatrix()</code>.
 			</p>
@@ -169,7 +168,7 @@
 			</li></h3>
 			<p>
 				Chaque ligne de la matrice est considérée comme un jeu de paramètres. Lorsque deux lignes se ressemblent, elles sont associées au même cluster.<br/>
-				Dans notre implémentation, nous avons employé l'algorithme des K-Means pour réaliser ces regroupements.
+				Dans notre implémentation, nous avons employé l'algorithme des K-Means développé durant les séances de travaux pratiques pour réaliser ces regroupements.
 			</p>
 			<h3><li>
 				Assignement des points au cluster de leur ligne dans la matrice des vecteurs propres
